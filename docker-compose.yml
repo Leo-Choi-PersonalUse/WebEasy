@@ -1,0 +1,12 @@
+version: '1'
+services:
+  vuejs: 
+    build: ./frontend
+  laravel: 
+    build: ./backend
+    ports:
+      - 8000:8000
+  nginx: 
+    build: ./nginx
+    ports:
+      - 80:80
