@@ -1,6 +1,6 @@
 FROM node:21.6.2
 WORKDIR /app
-COPY /app /app
+COPY /vueServer /app
 RUN npm install \
     && npm install pm2 -g 
 
