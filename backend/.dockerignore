@@ -1,0 +1,30 @@
+# Ignore development and debugging files
+node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.DS_Store
+.vscode
+vendor
+
+# Ignore build and output directories
+dist
+build
+coverage
+
+# Ignore configuration files
+.env
+.env.local
+.env.*.local
+.env.development
+.env.test
+.env.production
+
+# Ignore version control directories
+.git
+.svn
+
+# Ignore package manager lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
