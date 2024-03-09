@@ -12,12 +12,16 @@ RUN apt-get update \
     && apt-get install -y curl \
     && curl -sS https://getcomposer.org/installer -o composer-setup.php \
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
+    && apt-get install unzip -y \
     && composer self-update \
     && composer install \
     && php artisan key:generate \
     && su \
     && chmod 777 ./bootstrap/cache \
     && chmod 777 ./storage/
+
+
+
 
 # Make port 8000 available to the world outside this container
 EXPOSE 8000
