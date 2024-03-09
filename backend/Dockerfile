@@ -26,4 +26,4 @@ RUN apt-get update \
 # Make port 8000 available to the world outside this container
 EXPOSE 8000
 
-CMD ["php", "artisan", "serve", "--port=8000"]
+CMD ["php", "artisan", "serve","--host", "0.0.0.0","--port=8000"]
