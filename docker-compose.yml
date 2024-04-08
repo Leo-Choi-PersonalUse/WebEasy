@@ -1,12 +1,32 @@
-version: '1'
+version: "3.0"
 services:
   vuejs: 
     build: ./frontend
-  laravel: 
+    volumes:
+      - "./frontend/vueServer:/app"
+      - "/app/node_modules"
+    ports:
+    - 3100:3100
+  laravel:
     build: ./backend
+    volumes:
+      - "./backend/laravelServer:/var/www/html"
+      - "/var/www/html/vendor"
     ports:
       - 8000:8000
   nginx: 
     build: ./nginx
     ports:
       - 80:80
+  mysql:
+    container_name: mysql
+    hostname: mysql
+    restart: always
+    image: mysql:latest
+    platform: linux/x86_64
+    ports:
+    - "3306:3306"
+    environment:
+      HOSTNAME: "mysql"
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_PASS: 'password'
