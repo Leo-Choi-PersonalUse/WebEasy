@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\PublicHolidays;
+use App\Http\Controllers\RedisController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +26,5 @@ Route::prefix('v1')->group(function () {
     // Route::patch('{table}/{id}', [GenericController::class, 'update']);
     // Route::post('{table}', [GenericController::class, 'store']);
     Route::get('/getPublicHolidays', [PublicHolidays::class, 'get']);
+    Route::get('/checkRedisConnection', [RedisController::class, 'checkConnection']);
 });

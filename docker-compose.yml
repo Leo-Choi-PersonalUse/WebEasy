@@ -32,3 +32,10 @@ services:
       HOSTNAME: "mysql"
       MYSQL_ROOT_PASSWORD: 'password'
       MYSQL_PASS: 'password'
+  redis:
+    container_name: redis
+    hostname: redis
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
