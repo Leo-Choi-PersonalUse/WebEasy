@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\PublicHolidays;
 use App\Http\Controllers\RedisController;
+use App\Http\Controllers\MysqlController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,4 +30,14 @@ Route::prefix('v1')->group(function () {
     Route::get('/checkRedisConnection', [RedisController::class, 'checkConnection']);
     Route::get('/getKey/{key}', [RedisController::class, 'getKey']);
     Route::get('/deleteKey/{key}', [RedisController::class, 'deleteKey']);
+});
+
+Route::prefix('v1/test/redis')->group(function () {
+    Route::get('/checkRedisConnection', [RedisController::class, 'checkConnection']);
+    Route::get('/getKey/{key}', [RedisController::class, 'getKey']);
+    Route::get('/deleteKey/{key}', [RedisController::class, 'deleteKey']);
+});
+
+Route::prefix('v1/test/mysql')->group(function () {
+    Route::get('/checkConnection', [MysqlController::class, 'checkConnection']);
 });

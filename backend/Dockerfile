@@ -7,6 +7,7 @@ WORKDIR /var/www/html
 COPY ./laravelServer /var/www/html
 COPY ./laravelServer/.env.example /var/www//html/.env
 
+
 # Install PHP extensions
 RUN apt-get update \
     && apt-get install -y curl \
@@ -19,10 +20,10 @@ RUN apt-get update \
     && php artisan key:generate \
     && su \
     && chmod 777 ./bootstrap/cache \
-    && chmod 777 ./storage/
-
-
-
+    && chmod 777 ./storage/ \
+    && apt-get install default-mysql-client -y \
+    && docker-php-ext-install mysqli pdo_mysql \
+    && php artisan migrate --force
 
 # Make port 8000 available to the world outside this container
 EXPOSE 8000
