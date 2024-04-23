@@ -2,20 +2,24 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Routing\Controller as BaseController;
 
 class PublicHolidays extends BaseController
 {
-    use AuthorizesRequests, ValidatesRequests;
-
     public function get()
     {
+        // Attempt to retrieve the data from Redis cache
+        $cachedData = Redis::get('api_public_holidays');
+
+        if ($cachedData) {
+            // If the data exists in Redis, return it
+            return json_decode($cachedData, true);
+        }
+
         $response_en = Http::get('https://www.1823.gov.hk/common/ical/en.json');
         $response_tc = Http::get('http://www.1823.gov.hk/common/ical/tc.json');
-
 
         if ($response_en->successful() && $response_tc->successful()) {
             // -------- remove the utf-8 BOM ----
@@ -37,6 +41,7 @@ class PublicHolidays extends BaseController
                 ];
             }
 
+            Redis::set('api_public_holidays', json_encode($res));
             return $res;
 
         } else {
