@@ -33,7 +33,7 @@ Route::prefix('v1')->group(function () {
 });
 
 Route::prefix('v1/test/redis')->group(function () {
-    Route::get('/checkRedisConnection', [RedisController::class, 'checkConnection']);
+    Route::get('/checkConnection', [RedisController::class, 'checkConnection']);
     Route::get('/getKey/{key}', [RedisController::class, 'getKey']);
     Route::get('/deleteKey/{key}', [RedisController::class, 'deleteKey']);
 });
