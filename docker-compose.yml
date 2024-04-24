@@ -1,30 +1,7 @@
 version: "3.0"
 services:
-  vuejs:
-    build: ./frontend
-    volumes:
-      - "./frontend/vueServer:/app"
-      - "/app/node_modules"
-    ports:
-      - 3100:3100
-  laravel:
-    build: ./backend
-    volumes:
-      - "./backend/laravelServer:/var/www/html"
-      - "/var/www/html/vendor"
-    ports:
-      - 8000:8000
-    depends_on:
-      - mysql
-  nginx:
-    build: ./nginx
-    volumes:
-      - "./nginx/conf.d:/etc/nginx/conf.d"
-    ports:
-      - 80:80
   mysql:
     container_name: mysql
-    hostname: mysql
     restart: always
     image: mysql:latest
     platform: linux/x86_64
@@ -34,6 +11,24 @@ services:
       HOSTNAME: "mysql"
       MYSQL_ROOT_PASSWORD: 'password'
       MYSQL_PASS: 'password'
+    volumes:
+      - ./mysql/scripts:/docker-entrypoint-initdb.d
+  vuejs:
+    build: ./frontend
+    volumes:
+      - "./frontend/vueServer:/app"
+      - "/app/node_modules"
+    ports:
+      - 3100:3100
+  nginx:
+    build: ./nginx
+    volumes:
+      - "./nginx/conf.d:/etc/nginx/conf.d"
+    ports:
+      - 80:80
+    depends_on:
+      - vuejs
+      - laravel
   redis:
     container_name: redis
     hostname: redis
@@ -41,3 +36,13 @@ services:
     restart: always
     ports:
       - "6379:6379"
+  laravel:
+    build: ./backend
+    volumes:
+      - "./backend/laravelServer:/var/www/html"
+      - "/var/www/html/vendor"
+    ports:
+      - 8000:8000
+    depends_on:
+      - mysql 
+    command: sh -c "./wait-for-it.sh -t 30 mysql:3306 -- php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000"
