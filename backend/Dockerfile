@@ -7,6 +7,8 @@ WORKDIR /var/www/html
 COPY ./laravelServer /var/www/html
 COPY ./laravelServer/.env.example /var/www//html/.env
 
+RUN chmod +x /var/www/html/sh/wait-for-it.sh
+
 
 # Install PHP extensions
 RUN apt-get update \

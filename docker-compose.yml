@@ -41,8 +41,9 @@ services:
     volumes:
       - "./backend/laravelServer:/var/www/html"
       - "/var/www/html/vendor"
+      - "/var/www/html/sh"
     ports:
       - 8000:8000
     depends_on:
       - mysql 
-    command: sh -c "./wait-for-it.sh -t 30 mysql:3306 -- php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000"
+    command: sh -c "./sh/wait-for-it.sh -t 30 mysql:3306 -- php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000"
