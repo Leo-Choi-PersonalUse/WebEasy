@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Facade;
+use Illuminate\Support\ServiceProvider;
+
 return [
 
     /*
@@ -27,7 +30,7 @@ return [
     */
 
     'env' => env('APP_ENV', 'production'),
-
+    'asset_url' => env('ASSET_URL' , './'),
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
@@ -123,4 +126,7 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'providers' => ServiceProvider::defaultProviders()->merge([
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+    ])->toArray(),
 ];

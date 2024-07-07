@@ -26,7 +26,9 @@ RUN apt-get update \
     && apt-get install default-mysql-client -y \
     && docker-php-ext-install mysqli pdo_mysql \
     && pecl install redis \
-    && docker-php-ext-enable redis
+    && docker-php-ext-enable redis \
+    && composer install 
+
 
 # Make port 8000 available to the world outside this container
 EXPOSE 8000
