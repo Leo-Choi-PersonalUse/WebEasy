@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\HelloworldController;
+use App\Http\Controllers\Api\GenericController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -19,16 +19,22 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
 ], function ($router) {
-    // Route::get('/', 'AuthController@me')->name('me');
-    // Route::post('login', 'AuthController@login')->name('login');
-    // Route::post('logout', 'AuthController@logout')->name('logout');
-    //Route::post('/register', [AuthController::class, 'register'])->name('register');
     Route::post('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api')->name('logout');
     //Route::post('/refresh', [AuthController::class, 'refresh'])->middleware('auth:api')->name('refresh');
     Route::post('/me', [AuthController::class, 'me'])->middleware('auth:api')->name('me');
 
     //Route::get('/helloworld', [HelloworldController::class, 'index']);
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'v1'
+], function ($router) {
+    Route::get('{table}', [GenericController::class, 'index']);
+    Route::get('{table}/{id}', [GenericController::class, 'show']);
+    Route::patch('{table}/{id}', [GenericController::class, 'update']);
+    Route::post('{table}', [GenericController::class, 'store']);
 });
 
 // Route::middleware('auth:api')->group(function(){
