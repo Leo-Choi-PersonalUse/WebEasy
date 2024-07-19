@@ -182,6 +182,7 @@ const currentFlag = computed(() => {
     return `/assets/images/flags/${i18n.locale.toUpperCase()}.svg`;
 });
 const API_Authentication_ENDPOINT = () => {
+    return `/backend/api/auth/login`;
     return `${window.location.hostname}/backend/api/auth/login`;
 
 }
@@ -220,9 +221,9 @@ async function fetchEasy(endPoint, method, body) {
     const setting = {
         method: method,
         body: JSON.stringify(body),
-        // headers: {
-        //     'Content-Type': 'application/json',
-        // }
+        headers: {
+            'Content-Type': 'application/json',
+        }
     };
 
     try {
@@ -234,7 +235,7 @@ async function fetchEasy(endPoint, method, body) {
         debugger;
         return data;
     } catch (error) {
-        console.error(error);
+        // console.error(error);
     }
 
 }
