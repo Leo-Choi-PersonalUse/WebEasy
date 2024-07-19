@@ -667,6 +667,9 @@
                                     <li @click="toggleMobileMenu">
                                         <router-link to="/auth/cover-password-reset" target="_blank">{{ $t('recover_id_cover') }}</router-link>
                                     </li>
+                                    <li @click="toggleMobileMenu">
+                                        <router-link to="/auth/login" target="_blank">{{ $t('login') }}</router-link>
+                                    </li>
                                 </ul>
                             </vue-collapsible>
                         </li>
