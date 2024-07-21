@@ -550,6 +550,12 @@ const routes: RouteRecordRaw[] = [
         component: () => import(/* webpackChunkName: "auth-cover-password-reset" */ '../views/auth/cover-password-reset.vue'),
         meta: { layout: 'auth' },
     },
+    {
+        path: '/auth/login',
+        name: 'login',
+        component: () => import('../views/auth/login.vue'),
+        meta: { layout: 'auth' },
+    },
 ];
 
 const router = createRouter({
