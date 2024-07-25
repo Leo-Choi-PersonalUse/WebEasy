@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Str;
+use Illuminate\Support\Str; 
+use Illuminate\Support\Facades\DB;
 
 class GenericController extends Controller
 {
@@ -26,7 +27,9 @@ class GenericController extends Controller
 
             // Check if the model class exists
             if (!class_exists($modelClass)) {
-                abort(404);
+                //abort(404);
+                $data = DB::table($table)->get();
+                return response()->json($data); 
             }
 
             // Retrieve the data using the model
