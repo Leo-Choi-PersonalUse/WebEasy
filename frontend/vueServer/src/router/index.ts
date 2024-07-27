@@ -5,6 +5,19 @@ import appSetting from '@/app-setting';
 import HomeView from '../views/index.vue';
 
 const routes: RouteRecordRaw[] = [
+    // My tables
+    {
+        path: '/table/users',
+        name: 'users',
+        component: () => import(/* webpackChunkName: "analytics" */ '../views/users.vue'),
+    },
+    {
+        path: '/table/posts',
+        name: 'posts',
+        component: () => import(/* webpackChunkName: "analytics" */ '../views/analytics.vue'),
+    },
+
+
     // dashboard
     { path: '/', name: 'home', component: HomeView },
     {
