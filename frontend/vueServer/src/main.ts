@@ -8,6 +8,11 @@ import { createPinia } from 'pinia';
 const pinia = createPinia();
 app.use(pinia);
 
+// Make the utility functions available globally
+// import * as utils from './utils';
+// app.config.globalProperties.$utils = utils;
+
+
 import router from '@/router';
 app.use(router);
 

@@ -150,7 +150,7 @@
 </template>
 <script lang="ts" setup>
 
-import { computed, reactive} from 'vue';
+import { computed, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import appSetting from '@/app-setting';
 import { useAppStore } from '@/stores/index';
@@ -163,11 +163,11 @@ import IconInstagram from '@/components/icon/icon-instagram.vue';
 import IconFacebookCircle from '@/components/icon/icon-facebook-circle.vue';
 import IconTwitter from '@/components/icon/icon-twitter.vue';
 import IconGoogle from '@/components/icon/icon-google.vue';
-import VueCookies from 'vue-cookies'
+import * as utils from '@/utils';
 
 useMeta({ title: 'Login Boxed' });
 const router = useRouter();
-const cookies = VueCookies.hasOwnProperty('VueCookies') ? VueCookies.VueCookies : VueCookies;
+
 const store = useAppStore();
 // multi language
 const i18n = reactive(useI18n());
@@ -181,20 +181,14 @@ const currentFlag = computed(() => {
 const API_Authentication_ENDPOINT = () => {
     return `/backend/api/auth/login`;
 }
-function isEmptyNull(str) {
-    return str == null || str.length == 0 || str == '';
-}
 
-function isNOtEmptyNull(str) {
-    return !isEmptyNull(str);
-}
 
 async function login() {
 
     let userEmail = document.getElementById('Email') && document.getElementById('Email').value ? document.getElementById('Email').value : '';
     let userPassword = document.getElementById('Password') && document.getElementById('Password').value ? document.getElementById('Password').value : '';
 
-    if (isEmptyNull(userEmail) || isEmptyNull(userPassword)) return;
+    if (utils.isEmptyNull(userEmail) || utils.isEmptyNull(userPassword)) return;
 
     let input = {
         'email': userEmail,
@@ -207,32 +201,13 @@ async function login() {
 
 async function loginHandler(input) {
     let api = API_Authentication_ENDPOINT();
-    const response = await fetchEasy(api, 'POST', input);
-
-    if (isNOtEmptyNull(response) && response.hasOwnProperty('token')) {
-        cookies.set('token', response.token, '1h');
+    const response = await utils.fetchEasy(api, 'POST', input);
+    
+    if (utils.isNOtEmptyNull(response) && response.hasOwnProperty('token')) {
+        utils.cookies.set('token', response.token);
     }
 }
 
-async function fetchEasy(endPoint, method, body) {
-    const setting = {
-        method: method,
-        body: JSON.stringify(body),
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    };
-    try {
-        const response = await fetch(endPoint, setting);
-        if (!response.ok)
-            throw new Error(`Response status: ${response.status}`);
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error(error);
-    }
-
-}
 
 function kasonTesting() {
  debugger;
