@@ -33,6 +33,35 @@
                                 <div class="flex items-center">
                                     <icon-menu-dashboard class="group-hover:!text-primary shrink-0" />
                                     <span class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">
+                                        <!-- {{ $t('dashboard') }} -->
+                                        My Table
+                                    </span>
+                                </div>
+                                <div :class="{ 'rtl:rotate-90 -rotate-90': activeDropdown !== 'dashboard' }">
+                                    <icon-caret-down />
+                                </div>
+                            </button>
+                            <vue-collapsible :isOpen="activeDropdown === 'dashboard'">
+                                <ul class="sub-menu text-gray-500">
+                                    <li>
+                                        <router-link to="/table/users" @click="toggleMobileMenu">users</router-link>
+                                    </li>
+                                    <li>
+                                        <router-link to="/table/posts" @click="toggleMobileMenu">posts</router-link>
+                                    </li>
+                                </ul>
+                            </vue-collapsible>
+                        </li>
+                        <li class="menu nav-item">
+                            <button
+                                type="button"
+                                class="nav-link group w-full"
+                                :class="{ active: activeDropdown === 'dashboard' }"
+                                @click="activeDropdown === 'dashboard' ? (activeDropdown = null) : (activeDropdown = 'dashboard')"
+                            >
+                                <div class="flex items-center">
+                                    <icon-menu-dashboard class="group-hover:!text-primary shrink-0" />
+                                    <span class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">
                                         {{ $t('dashboard') }}
                                     </span>
                                 </div>
