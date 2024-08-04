@@ -87,14 +87,12 @@
                                 </label>
                             </div>
 
-                            <button @click ="async ()=> {await login()}"
-                            
-           
+                            <button type="button" @click="async () => { await login() }"
                                 class="btn btn-gradient !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
                                 Sign in
                             </button>
 
-                            <button @click="() => { console.log('fuck'); }" class="btn btn-gradient !mt-6 w-full border-0 uppercase
+                            <button button type="button" @click="() => { kasonTesting() }" class="btn btn-gradient !mt-6 w-full border-0 uppercase
                                 shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
                                 fuck
                             </button>
@@ -152,7 +150,7 @@
 </template>
 <script lang="ts" setup>
 
-import { computed, reactive, ref, registerRuntimeCompiler, watch } from 'vue';
+import { computed, reactive} from 'vue';
 import { useI18n } from 'vue-i18n';
 import appSetting from '@/app-setting';
 import { useAppStore } from '@/stores/index';
@@ -165,12 +163,11 @@ import IconInstagram from '@/components/icon/icon-instagram.vue';
 import IconFacebookCircle from '@/components/icon/icon-facebook-circle.vue';
 import IconTwitter from '@/components/icon/icon-twitter.vue';
 import IconGoogle from '@/components/icon/icon-google.vue';
-import axios from 'axios';
-
+import VueCookies from 'vue-cookies'
 
 useMeta({ title: 'Login Boxed' });
 const router = useRouter();
-
+const cookies = VueCookies.hasOwnProperty('VueCookies') ? VueCookies.VueCookies : VueCookies;
 const store = useAppStore();
 // multi language
 const i18n = reactive(useI18n());
@@ -183,10 +180,7 @@ const currentFlag = computed(() => {
 });
 const API_Authentication_ENDPOINT = () => {
     return `/backend/api/auth/login`;
-    return `${window.location.hostname}/backend/api/auth/login`;
-
 }
-
 function isEmptyNull(str) {
     return str == null || str.length == 0 || str == '';
 }
@@ -214,7 +208,10 @@ async function login() {
 async function loginHandler(input) {
     let api = API_Authentication_ENDPOINT();
     const response = await fetchEasy(api, 'POST', input);
-    debugger;
+
+    if (isNOtEmptyNull(response) && response.hasOwnProperty('token')) {
+        cookies.set('token', response.token, '1h');
+    }
 }
 
 async function fetchEasy(endPoint, method, body) {
@@ -225,33 +222,21 @@ async function fetchEasy(endPoint, method, body) {
             'Content-Type': 'application/json',
         }
     };
-
     try {
         const response = await fetch(endPoint, setting);
-        debugger;
         if (!response.ok)
             throw new Error(`Response status: ${response.status}`);
         const data = await response.json();
-        debugger;
         return data;
     } catch (error) {
-        // console.error(error);
+        console.error(error);
     }
 
 }
-// return fetch(endPoint, {
-//     method: method,
-//     body: JSON.stringify(data)
-// })
-//     .then(function (response) {
-//         debugger;
-//         return response.json;
-//     })
-//     .catch(function (error) {
-//         debugger;
-//         return error.message;
-//     });
 
+function kasonTesting() {
+ debugger;
+}
 
 
 </script>
