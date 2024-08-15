@@ -17,7 +17,7 @@ services:
     build: ./frontend
     volumes:
       - "./frontend/vueServer:/app"
-      - "/app/node_modules"
+      #- "/app/node_modules"
     ports:
       - 3100:3100
   nginx:
