@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\GenericController;
+use App\Http\Controllers\Api\PostController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -31,6 +32,12 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'v1'
 ], function ($router) {
+
+    Route::get('posts', [PostController::class, 'index']);
+    Route::post('posts', [PostController::class, 'store']);
+    Route::patch('posts/{id}', [PostController::class, 'update']);
+      
+
     Route::get('{table}', [GenericController::class, 'index']);
     Route::get('{table}/{id}', [GenericController::class, 'show']);
     Route::patch('{table}/{id}', [GenericController::class, 'update']);
@@ -40,5 +47,5 @@ Route::group([
 // Route::middleware('auth:api')->group(function(){
 //     Route::get('/helloworld', 'App\Http\Controllers\Api\HelloworldController@index');
 //  });
- //Route::get('/helloworld', 'App\Http\Controllers\Api\HelloworldController@index');
- //Route::get('/helloworld', [HelloworldController::class, 'index']);
+//Route::get('/helloworld', 'App\Http\Controllers\Api\HelloworldController@index');
+//Route::get('/helloworld', [HelloworldController::class, 'index']);

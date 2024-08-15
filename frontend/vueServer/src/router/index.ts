@@ -14,7 +14,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/table/posts',
         name: 'posts',
-        component: () => import(/* webpackChunkName: "analytics" */ '../views/analytics.vue'),
+        component: () => import(/* webpackChunkName: "analytics" */ '../views/posts.vue'),
     },
 
 
