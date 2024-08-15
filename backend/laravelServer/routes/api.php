@@ -2,53 +2,43 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\PublicHolidays;
-use App\Http\Controllers\API\GenericController;
-use App\Http\Controllers\RedisController;
-use App\Http\Controllers\MysqlController;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\GenericController;
 
+Route::get('/user', function (Request $request) {
+    return $request->user();
+})->middleware('auth:sanctum');
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+// Route::group(['prefix' => 'auth', 'namespace' => 'App\Http\Controllers\Api'], function () {
+//     Route::get('/', 'AuthController@me')->name('me');
+//     Route::post('login', 'AuthController@login')->name('login');
+//     Route::post('logout', 'AuthController@logout')->name('logout');
+// });
 
-Route::prefix('auth')->group(function () {
-    Route::middleware('api')->group(function ($router) {
-        Route::post('/login', [AuthController::class, 'login']);
-        Route::post('/register', [AuthController::class, 'register']);
-        Route::post('/logout', [AuthController::class, 'logout']);
-        Route::post('/refresh', [AuthController::class, 'refresh']);
-        Route::get('/user-profile', [AuthController::class, 'userProfile']);
-    });
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function ($router) {
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api')->name('logout');
+    //Route::post('/refresh', [AuthController::class, 'refresh'])->middleware('auth:api')->name('refresh');
+    Route::post('/me', [AuthController::class, 'me'])->middleware('auth:api')->name('me');
+
+    //Route::get('/helloworld', [HelloworldController::class, 'index']);
 });
 
-Route::prefix('v1')->group(function () {
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'v1'
+], function ($router) {
     Route::get('{table}', [GenericController::class, 'index']);
     Route::get('{table}/{id}', [GenericController::class, 'show']);
     Route::patch('{table}/{id}', [GenericController::class, 'update']);
     Route::post('{table}', [GenericController::class, 'store']);
-
-    Route::get('/getPublicHolidays', [PublicHolidays::class, 'get']);
 });
 
-Route::prefix('v1/test/redis')->group(function () {
-    Route::get('/checkConnection', [RedisController::class, 'checkConnection']);
-    Route::get('/getKey/{key}', [RedisController::class, 'getKey']);
-    Route::get('/deleteKey/{key}', [RedisController::class, 'deleteKey']);
-});
-
-Route::prefix('v1/test/mysql')->group(function () {
-    Route::get('/checkConnection', [MysqlController::class, 'checkConnection']);
-});
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->group(function(){
+//     Route::get('/helloworld', 'App\Http\Controllers\Api\HelloworldController@index');
+//  });
+ //Route::get('/helloworld', 'App\Http\Controllers\Api\HelloworldController@index');
+ //Route::get('/helloworld', [HelloworldController::class, 'index']);
