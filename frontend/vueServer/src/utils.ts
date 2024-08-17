@@ -35,6 +35,6 @@ export function isNOtEmptyNull(str) {
 export async function logout() {
     const api = `/backend/api/auth/logout`;
     const response = await fetchEasy(api, 'POST');
-    VueCookies.VueCookies.remove('token');
+    cookies.remove('token');
 }
 
