@@ -202,16 +202,15 @@ async function login() {
 async function loginHandler(input) {
     let api = API_Authentication_ENDPOINT();
     const response = await utils.fetchEasy(api, 'POST', input);
-    
+
     if (utils.isNOtEmptyNull(response) && response.hasOwnProperty('token')) {
         utils.cookies.set('token', response.token);
     }
 }
 
-
-function kasonTesting() {
- debugger;
+async function kasonTesting() {
+    await utils.logout();
+    debugger;
 }
-
 
 </script>
