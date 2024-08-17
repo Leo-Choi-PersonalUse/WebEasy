@@ -57,4 +57,5 @@ app.component('Popper', Popper);
 import vue3JsonExcel from 'vue3-json-excel';
 app.use(vue3JsonExcel);
 
+import * as utils from '@/utils';
 app.mount('#app');

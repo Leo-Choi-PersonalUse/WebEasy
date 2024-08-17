@@ -1,13 +1,17 @@
 import VueCookies from 'vue-cookies'
 export const cookies = VueCookies.hasOwnProperty('VueCookies') ? VueCookies.VueCookies : VueCookies;
 
-export async function fetchEasy(endPoint, method, body) {
+export async function fetchEasy(endPoint, method, body?) {
+
+    let token = utils.cookies.get('token');
+    let headers = new Map();
+    headers.set('Content-Type', 'application/json')
+    headers.set('Authorization', `Bearer ${token}`)
+    
     const setting = {
         method: method,
-        body: JSON.stringify(body),
-        headers: {
-            'Content-Type': 'application/json',
-        }
+        body: isNOtEmptyNull(body) ? JSON.stringify(body) : JSON.stringify({}),
+        headers: headers
     };
     try {
         const response = await fetch(endPoint, setting);
@@ -28,4 +32,9 @@ export function isNOtEmptyNull(str) {
     return !isEmptyNull(str);
 }
 
+export async function logout() {
+    const api = `/backend/api/auth/logout`;
+    const response = await fetchEasy(api, 'POST');
+    VueCookies.VueCookies.remove('token');
+}
 
