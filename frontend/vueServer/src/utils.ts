@@ -3,7 +3,7 @@ export const cookies = VueCookies.hasOwnProperty('VueCookies') ? VueCookies.VueC
 
 export async function fetchEasy(endPoint, method, body?) {
 
-    let token = utils.cookies.get('token');
+    let token = cookies.get('token');
     let headers = new Map();
     headers.set('Content-Type', 'application/json')
     headers.set('Authorization', `Bearer ${token}`)
