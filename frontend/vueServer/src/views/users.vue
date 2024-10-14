@@ -36,11 +36,11 @@ import { ref, onMounted, h } from 'vue';
 import Vue3Datatable from '@bhplugin/vue3-datatable';
 import { useMeta } from '@/composables/use-meta';
 import IconBell from '@/components/icon/icon-bell.vue';
-import VueCookies from 'vue-cookies';
+import * as utils from '@/utils';
 
 useMeta({ title: 'Default Order Sorting Table' });
 const search = ref('');
-const cookies = VueCookies.hasOwnProperty('VueCookies') ? VueCookies.VueCookies : VueCookies;
+
 const cols =
     ref([
         { field: 'id', title: 'ID', isUnique: true },
@@ -73,10 +73,12 @@ const rows = ref(
 );
 
 onMounted(async () => {
+    debugger;
     try {
         const response = await fetch('http://localhost/backend/api/v1/users', {
             headers: {
-                'Authorization': `Bearer ${cookies.get('token')}`,
+                // 'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGFyYXZlbC9hcGkvYXV0aC9sb2dpbiIsImlhdCI6MTcyMDg3NDk4OCwiZXhwIjoxNzIwODc4NTg4LCJuYmYiOjE3MjA4NzQ5ODgsImp0aSI6ImZMYmExeXc3NHV3R1JRSjEiLCJzdWIiOiIyIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.fJRCnaw4ahFg0zLM_2_kEMHUAomsYhzp-vjLTEz5X_4',
+                'Authorization': `Bearer ${utils.cookies.get('token')}`,
                 'Content-Type': 'application/json',
             }
         });
