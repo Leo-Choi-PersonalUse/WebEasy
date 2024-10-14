@@ -27,7 +27,8 @@ RUN apt-get update \
     && docker-php-ext-install mysqli pdo_mysql \
     && pecl install redis \
     && docker-php-ext-enable redis \
-    && composer install 
+    && composer install \
+    && cp -R ./vendor /var/www/vendor
 
 
 # Make port 8000 available to the world outside this container
