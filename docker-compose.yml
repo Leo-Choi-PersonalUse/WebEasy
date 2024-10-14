@@ -1,4 +1,4 @@
-version: "3.0"
+#version: "3.0"
 services:
   mysql:
     container_name: mysql
@@ -40,8 +40,8 @@ services:
     build: ./backend
     volumes:
       - "./backend/laravelServer:/var/www/html"
-      - "/var/www/html/vendor"
-      - "/var/www/html/sh"
+      #- "/var/www/html/vendor"
+      #- "/var/www/html/sh"
     ports:
       - 8000:8000
     depends_on:
