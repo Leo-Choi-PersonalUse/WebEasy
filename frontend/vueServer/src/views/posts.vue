@@ -53,15 +53,16 @@
                                                 <form class="space-y-5 p-8">
                                                     <div>
                                                         <label for="groupTitle">Title</label>
-                                                        <input id="groupTitle" type="text" placeholder="Enter Title" v-model="title"
-                                                            class="form-input" />
+                                                        <input id="groupTitle" type="text" placeholder="Enter Title"
+                                                            v-model="title" class="form-input" />
                                                     </div>
                                                     <div>
                                                         <label for="groupContent">Content</label>
-                                                        <input id="groupContent" type="text" placeholder="Enter Content" v-model="content"
-                                                            class="form-input" />
+                                                        <input id="groupContent" type="text" placeholder="Enter Content"
+                                                            v-model="content" class="form-input" />
                                                     </div>
-                                                    <button type="button" class="btn btn-primary !mt-6" @click="submitData">Submit</button>
+                                                    <button type="button" class="btn btn-primary !mt-6"
+                                                        @click="submitData">Submit</button>
                                                 </form>
                                             </DialogPanel>
                                         </TransitionChild>
@@ -94,13 +95,13 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ref, onMounted, h } from 'vue';
+import { ref, onMounted } from 'vue';
 import Vue3Datatable from '@bhplugin/vue3-datatable';
 import { useMeta } from '@/composables/use-meta';
 import IconPlus from '@/components/icon/icon-plus.vue';
 import IconBell from '@/components/icon/icon-bell.vue';
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogOverlay } from '@headlessui/vue';
-import { helloWorld } from '@/globalFunction';
+//import { helloWorld } from '@/globalFunction';
 
 
 useMeta({ title: 'Default Order Sorting Table' });
@@ -114,45 +115,19 @@ const cols =
         { field: 'title', title: 'Title' },
         { field: 'content', title: 'Content' },
     ]) || [];
-const rows = ref(
-    [
-        // {
-        //     id: 1,
-        //     firstName: 'Caroline',
-        //     lastName: 'Jensen',
-        //     email: 'carolinejensen@zidant.com',
-        //     dob: '2004-05-28',
-        //     address: {
-        //         street: '529 Scholes Street',
-        //         city: 'Temperanceville',
-        //         zipcode: 5235,
-        //         geo: {
-        //             lat: 23.806115,
-        //             lng: 164.677197,
-        //         },
-        //     },
-        //     phone: '+1 (821) 447-3782',
-        //     isActive: true,
-        //     age: 39,
-        //     company: 'POLARAX',
-        // },
-    ] || []
-);
+const rows = ref([]);
 
 onMounted(async () => {
-    debugger;
     try {
-        debugger;
         const response = await fetch('http://localhost/backend/api/v1/posts', {
             headers: {
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGFyYXZlbC9hcGkvYXV0aC9sb2dpbiIsImlhdCI6MTcyMDg3NDk4OCwiZXhwIjoxNzIwODc4NTg4LCJuYmYiOjE3MjA4NzQ5ODgsImp0aSI6ImZMYmExeXc3NHV3R1JRSjEiLCJzdWIiOiIyIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.fJRCnaw4ahFg0zLM_2_kEMHUAomsYhzp-vjLTEz5X_4',
+                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGFyYXZlbC9hcGkvYXV0aC9sb2dpbiIsImlhdCI6MTcyOTc1NTAwNywiZXhwIjoxNzI5NzU4NjA3LCJuYmYiOjE3Mjk3NTUwMDcsImp0aSI6IkxGSGRtanFHM0NRQ2ZyZmEiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.B5mpwhVQTcYvNJ3FrMFCBCXGVeKyqlsV1xOHdH5A2_M',
                 'Content-Type': 'application/json',
             }
         });
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        debugger;
         const data = await response.json();
         rows.value = data;
     } catch (error) {
@@ -180,7 +155,6 @@ const submitData = async () => {
         }
         //const data = await response.json();
         location.reload();
-        helloWorld();
 
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);

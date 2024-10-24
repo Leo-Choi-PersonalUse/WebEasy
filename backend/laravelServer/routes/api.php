@@ -28,8 +28,12 @@ Route::group([
     //Route::get('/helloworld', [HelloworldController::class, 'index']);
 });
 
+
 Route::group([
-    'middleware' => 'api',
+    //Api for authentication  
+    //'middleware' => ['auth:api'],
+    //Open For all 
+    'middleware' => ['api'],
     'prefix' => 'v1'
 ], function ($router) {
 
@@ -44,8 +48,16 @@ Route::group([
     Route::post('{table}', [GenericController::class, 'store']);
 });
 
+
+
 // Route::middleware('auth:api')->group(function(){
 //     Route::get('/helloworld', 'App\Http\Controllers\Api\HelloworldController@index');
 //  });
 //Route::get('/helloworld', 'App\Http\Controllers\Api\HelloworldController@index');
 //Route::get('/helloworld', [HelloworldController::class, 'index']);
+
+
+
+Route::get('/helloworld',function(){
+    return "Hello World!";
+});
