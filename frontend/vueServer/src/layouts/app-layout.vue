@@ -1,8 +1,11 @@
 <template>
+   
     <!--  BEGIN MAIN CONTAINER  -->
     <div class="relative">
         <!-- sidebar menu overlay -->
         <div class="fixed inset-0 bg-[black]/60 z-50 lg:hidden" :class="{ hidden: !store.sidebar }" @click="store.toggleSidebar()"></div>
+
+        <loading v-model:active="store.isShowEasyLoading" :is-full-page="true"/>
 
         <!-- screen loader -->
         <div
@@ -81,8 +84,9 @@
     import Footer from '@/components/layout/Footer.vue';
     import Setting from '@/components/ThemeCustomizer.vue';
     import appSetting from '@/app-setting';
-
     import { useAppStore } from '@/stores/index';
+    import Loading from 'vue-loading-overlay';
+    import 'vue-loading-overlay/dist/css/index.css';
     const store = useAppStore();
     const showTopButton = ref(false);
     onMounted(() => {
