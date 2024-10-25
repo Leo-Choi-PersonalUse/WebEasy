@@ -103,6 +103,7 @@ import IconBell from '@/components/icon/icon-bell.vue';
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogOverlay } from '@headlessui/vue';
 //import { helloWorld } from '@/globalFunction';
 import { useAppStore } from '@/stores/index';
+import { apiService } from '@/appservice';
 
 
 useMeta({ title: 'Default Order Sorting Table' });
@@ -122,21 +123,12 @@ const rows = ref([]);
 onMounted(async () => {
     try {
         store.showEasyLoading();
-        const response = await fetch('http://localhost/backend/api/v1/posts', {
-            headers: {
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGFyYXZlbC9hcGkvYXV0aC9sb2dpbiIsImlhdCI6MTcyOTc1NTAwNywiZXhwIjoxNzI5NzU4NjA3LCJuYmYiOjE3Mjk3NTUwMDcsImp0aSI6IkxGSGRtanFHM0NRQ2ZyZmEiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.B5mpwhVQTcYvNJ3FrMFCBCXGVeKyqlsV1xOHdH5A2_M',
-                'Content-Type': 'application/json',
-            }
-        });
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
+        let data = await apiService().restfulAPI({ endpoint: "posts", method: "GET" });
         rows.value = data;
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
     }
-    finally{
+    finally {
         store.dismissEasyLoading();
     }
 });
@@ -148,22 +140,13 @@ const submitData = async () => {
     });
     debugger;
     try {
-        const response = await fetch('http://localhost/backend/api/v1/posts', {
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer your-token',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(postData.value), // Convert the postData to JSON
-        });
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        //const data = await response.json();
-        location.reload();
-
+        store.showEasyLoading();
+        await apiService().restfulAPI({ endpoint: "posts", method: "POST", body: postData.value });
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
+    }
+    finally {
+        location.reload();
     }
 };
 
