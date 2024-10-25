@@ -28,7 +28,8 @@ RUN apt-get update \
     && pecl install redis \
     && docker-php-ext-enable redis \
     && composer install \
-    && cp -R ./vendor /var/www/vendor
+    && cp -R ./vendor /var/www/vendor \
+    && php artisan jwt:secret
 
 
 # Make port 8000 available to the world outside this container

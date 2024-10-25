@@ -33,6 +33,7 @@ export const useAppStore = defineStore('app', {
             { code: 'ae', name: 'Arabic' },
         ],
         isShowMainLoader: true,
+        isShowEasyLoading: false,
         semidark: false,
     }),
 
@@ -115,6 +116,15 @@ export const useAppStore = defineStore('app', {
             setTimeout(() => {
                 this.isShowMainLoader = false;
             }, 500);
+        },
+        showEasyLoading(){
+            this.isShowEasyLoading = true;
+            // setTimeout(() => {
+            //     this.isShowEasyLoading = false;
+            // }, 30000);
+        },
+        dismissEasyLoading(){
+            this.isShowEasyLoading = false;
         },
     },
     getters: {},
