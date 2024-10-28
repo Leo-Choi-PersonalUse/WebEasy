@@ -1,4 +1,5 @@
 import VueCookies from 'vue-cookies'
+import Vue3Datatable from '@bhplugin/vue3-datatable';
 export const cookies = VueCookies.hasOwnProperty('VueCookies') ? VueCookies.VueCookies : VueCookies;
 
 export async function fetchEasy(endPoint, method, body?) {
@@ -7,7 +8,7 @@ export async function fetchEasy(endPoint, method, body?) {
     let headers = new Map();
     headers.set('Content-Type', 'application/json')
     headers.set('Authorization', `Bearer ${token}`)
-    
+
     const setting = {
         method: method,
         body: isNOtEmptyNull(body) ? JSON.stringify(body) : JSON.stringify({}),
@@ -38,3 +39,21 @@ export async function logout() {
     cookies.remove('token');
 }
 
+export function getSelectedRows(datatable) {
+    debugger;
+    const selected = datatable.getSelectedRows();
+    selected.forEach((e) => {
+        console.log(e);
+    })
+    return selected;
+};
+
+export function deleteSelectedRows(datatable) {
+    debugger;
+    const selected = datatable.getSelectedRows(); //function from Vue3Datatable
+    //To Do delete action
+    selected.forEach((e) => {
+        console.log(e);
+    })
+    return selected;
+}

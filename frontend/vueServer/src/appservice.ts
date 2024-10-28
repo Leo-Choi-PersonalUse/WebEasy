@@ -3,11 +3,11 @@ export const apiService = () => {
 
     const restfulAPI = async ({ endpoint, method, body }: { endpoint: string, method: string, body?: object }) => {
         try {
-            debugger;
+            //debugger;
             const response = await fetch(`${url}/${endpoint}`, {
                 method: method,
                 headers: {
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGFyYXZlbC9hcGkvYXV0aC9sb2dpbiIsImlhdCI6MTcyOTc1NTAwNywiZXhwIjoxNzI5NzU4NjA3LCJuYmYiOjE3Mjk3NTUwMDcsImp0aSI6IkxGSGRtanFHM0NRQ2ZyZmEiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.B5mpwhVQTcYvNJ3FrMFCBCXGVeKyqlsV1xOHdH5A2_M',
+                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGFyYXZlbC9hcGkvYXV0aC9sb2dpbiIsImlhdCI6MTczMDA4MjM5NCwiZXhwIjoxNzMwMDg1OTk0LCJuYmYiOjE3MzAwODIzOTQsImp0aSI6IlRxUjFWOHVXbXNzZHlJaFgiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.yNOQqsclwNl0TC1e82hIWFbMr-Ybo8R4vP4Gm21Pz4k',
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(body)
