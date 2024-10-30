@@ -7,7 +7,7 @@ export const apiService = () => {
             const response = await fetch(`${url}/${endpoint}`, {
                 method: method,
                 headers: {
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGFyYXZlbC9hcGkvYXV0aC9sb2dpbiIsImlhdCI6MTczMDA4MjM5NCwiZXhwIjoxNzMwMDg1OTk0LCJuYmYiOjE3MzAwODIzOTQsImp0aSI6IlRxUjFWOHVXbXNzZHlJaFgiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.yNOQqsclwNl0TC1e82hIWFbMr-Ybo8R4vP4Gm21Pz4k',
+                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGFyYXZlbC9hcGkvYXV0aC9sb2dpbiIsImlhdCI6MTczMDI3NDMzMywiZXhwIjoxNzMwMjc3OTMzLCJuYmYiOjE3MzAyNzQzMzMsImp0aSI6Ilg5WWdWTGFhY0JMWnRVRlUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.be18Ch-YH54sgo6WkiISHjEaGkBo-xWz7U_UsbPWz6M',
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(body)
