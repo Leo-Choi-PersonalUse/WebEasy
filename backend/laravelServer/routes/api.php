@@ -37,15 +37,18 @@ Route::group([
     'prefix' => 'v1'
 ], function ($router) {
 
-    Route::get('posts', [PostController::class, 'index']);
-    Route::post('posts', [PostController::class, 'store']);
-    Route::patch('posts/{id}', [PostController::class, 'update']);
-      
+    // Route::get('posts', [PostController::class, 'index']);
+    // Route::get('posts/{id}', [PostController::class, 'show']);
+    // Route::post('posts', [PostController::class, 'store']);
+    // Route::patch('posts/{id}', [PostController::class, 'update']);
+    // Route::delete('posts/{id}', [PostController::class, 'destroy']);
+
 
     Route::get('{table}', [GenericController::class, 'index']);
     Route::get('{table}/{id}', [GenericController::class, 'show']);
     Route::patch('{table}/{id}', [GenericController::class, 'update']);
     Route::post('{table}', [GenericController::class, 'store']);
+    Route::delete('{table}/{id}', [GenericController::class, 'destroy']);
 });
 
 
@@ -58,6 +61,6 @@ Route::group([
 
 
 
-Route::get('/helloworld',function(){
+Route::get('/helloworld', function () {
     return "Hello World!";
 });
