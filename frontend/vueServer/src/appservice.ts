@@ -1,12 +1,12 @@
-import {cookies} from '@/utils';
+import { cookies } from '@/utils';
 
 export const apiService = () => {
     const url = "http://localhost/backend/api";
+    const restfulAPI = async ({ endpoint, method, body, query }: { endpoint: string, method: string, body?: object, query?: string }) => {
 
-    const restfulAPI = async ({ endpoint, method, body }: { endpoint: string, method: string, body?: object }) => {
+        query = query != null ? `?${query}` : "";
         try {
-            //debugger;
-            const response = await fetch(`${url}/v1/${endpoint}`, {
+            const response = await fetch(`${url}/v1/${endpoint}${query}`, {
                 method: method,
                 headers: {
                     'Authorization': `Bearer ${cookies.get("token")}`,

@@ -47,37 +47,13 @@ const cols =
         { field: 'name', title: 'Name' },
         { field: 'email', title: 'Email' },
     ]) || [];
-const rows = ref(
-    [
-        // {
-        //     id: 1,
-        //     firstName: 'Caroline',
-        //     lastName: 'Jensen',
-        //     email: 'carolinejensen@zidant.com',
-        //     dob: '2004-05-28',
-        //     address: {
-        //         street: '529 Scholes Street',
-        //         city: 'Temperanceville',
-        //         zipcode: 5235,
-        //         geo: {
-        //             lat: 23.806115,
-        //             lng: 164.677197,
-        //         },
-        //     },
-        //     phone: '+1 (821) 447-3782',
-        //     isActive: true,
-        //     age: 39,
-        //     company: 'POLARAX',
-        // },
-    ] || []
-);
+const rows = ref([]);
 
 onMounted(async () => {
     debugger;
     try {
         const response = await fetch('http://localhost/backend/api/v1/users', {
             headers: {
-                // 'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGFyYXZlbC9hcGkvYXV0aC9sb2dpbiIsImlhdCI6MTcyMDg3NDk4OCwiZXhwIjoxNzIwODc4NTg4LCJuYmYiOjE3MjA4NzQ5ODgsImp0aSI6ImZMYmExeXc3NHV3R1JRSjEiLCJzdWIiOiIyIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.fJRCnaw4ahFg0zLM_2_kEMHUAomsYhzp-vjLTEz5X_4',
                 'Authorization': `Bearer ${utils.cookies.get('token')}`,
                 'Content-Type': 'application/json',
             }

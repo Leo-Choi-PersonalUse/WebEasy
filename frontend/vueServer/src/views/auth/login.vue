@@ -194,6 +194,7 @@ async function login() {
         });
 
         if (res.hasOwnProperty('token')) {
+            debugger;
             utils.cookies.set('token', res.token);
             const toast = Swal.mixin({
                 toast: true,

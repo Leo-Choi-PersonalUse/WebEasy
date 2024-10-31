@@ -1,5 +1,6 @@
 import VueCookies from 'vue-cookies'
 import Vue3Datatable from '@bhplugin/vue3-datatable';
+import { apiService } from '@/appservice';
 export const cookies: any = VueCookies.hasOwnProperty('VueCookies') ? VueCookies.VueCookies : VueCookies;
 
 export async function fetchEasy(endPoint, method, body?) {
@@ -48,12 +49,8 @@ export function getSelectedRows(datatable) {
     return selected;
 };
 
-export function deleteSelectedRows(datatable) {
-    debugger;
-    const selected = datatable.getSelectedRows(); //function from Vue3Datatable
-    //To Do delete action
-    selected.forEach((e) => {
-        console.log(e);
-    })
-    return selected;
+export async function deleteSelectedRows({ tableName, id_list }: { tableName: string, id_list: Array<number> }) {//function from Vue3Datatable
+    let ids_str = id_list.join(",");
+    let res = await apiService().restfulAPI({ endpoint: tableName, method: "DELETE", query: `id=${ids_str}` })
+    return res;
 }

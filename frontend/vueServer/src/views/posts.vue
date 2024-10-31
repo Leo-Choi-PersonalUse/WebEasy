@@ -159,8 +159,17 @@ const submitData = async () => {
 
 const getdatatableRef = () => { return datatable.value }
 
-function deleteButtonHandler() {
-    deleteSelectedRows(getdatatableRef());
+async function deleteButtonHandler() {
+
+    let selectedRow = getSelectedRows(getdatatableRef());
+    let ids_arr = selectedRow.map((e) => e.id);
+    rows.value = rows.value.filter((e) => ids_arr.includes(e["id"]) == false)
+
+    // store.showEasyLoading();
+    // let res = await deleteSelectedRows({ tableName: "posts", id_list: ids_arr });
+    // store.dismissEasyLoading();
+
+    // rows.value = rows.value.filter((e) => ids_arr.include(e["id"]) == false)
 }
 
 
