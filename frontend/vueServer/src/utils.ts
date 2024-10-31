@@ -1,6 +1,6 @@
 import VueCookies from 'vue-cookies'
 import Vue3Datatable from '@bhplugin/vue3-datatable';
-export const cookies = VueCookies.hasOwnProperty('VueCookies') ? VueCookies.VueCookies : VueCookies;
+export const cookies: any = VueCookies.hasOwnProperty('VueCookies') ? VueCookies.VueCookies : VueCookies;
 
 export async function fetchEasy(endPoint, method, body?) {
 
@@ -9,7 +9,7 @@ export async function fetchEasy(endPoint, method, body?) {
     headers.set('Content-Type', 'application/json')
     headers.set('Authorization', `Bearer ${token}`)
 
-    const setting = {
+    const setting: any = {
         method: method,
         body: isNOtEmptyNull(body) ? JSON.stringify(body) : JSON.stringify({}),
         headers: headers
