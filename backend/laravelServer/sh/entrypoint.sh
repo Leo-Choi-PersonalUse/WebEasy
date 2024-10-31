@@ -2,7 +2,7 @@
 
 set -e
 
-cp -R /var/www/vendor /var/www/html
+cp -R /var/www/vendor /var/www/html #copy vendor to project folder
 
 # Run migrations and seed only if migrations haven't been run before
 if [ ! -f "/var/www/html/.migrated" ]; then

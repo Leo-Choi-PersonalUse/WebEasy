@@ -1,5 +1,7 @@
 <template>
     <div class="text-black dark:text-white-dark">
+
+        <loading v-model:active="store.isShowEasyLoading" :is-full-page="true"/>
         <!-- screen loader -->
         <div
             v-show="store.isShowMainLoader"
@@ -48,6 +50,7 @@
 <script setup lang="ts">
     import { ref, onMounted } from 'vue';
     import { useAppStore } from '@/stores/index';
+    import Loading from 'vue-loading-overlay';
     const store = useAppStore();
     const showTopButton = ref(false);
     onMounted(() => {

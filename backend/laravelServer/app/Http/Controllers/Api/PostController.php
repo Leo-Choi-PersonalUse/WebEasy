@@ -16,15 +16,10 @@ class PostController extends Controller
         return response()->json($data);
     }
 
-    public function show(Post $post)
+    public function show(Request $request, $id)
     {
-        // Load the post with its related data
-        $post->load('title', 'content');
-
-        // Return the view with the post data
-        return view('posts.show', [
-            'post' => $post
-        ]);
+        $record = Post::findOrFail($id);
+        return response()->json($record);
     }
 
     function store(Request $request)
@@ -64,12 +59,21 @@ class PostController extends Controller
         return response()->json($post);
     }
 
-    function destroy(Request $request, $id)
+    public function destroy(Request $request, $id)
     {
-        return response()->json([
-            'status' => 1,
-            'message' => 'PostController@destroy'
-        ]);
+        // Find the post by its ID
+        $post = Post::find($id);
+
+        // Check if the post exists
+        if (!$post) {
+            return response()->json(['message' => 'Post not found'], 404);
+        }
+
+        // Delete the post
+        $post->delete();
+
+        // Return a success response
+        return response()->json(['message' => 'Post deleted successfully']);
     }
 
     function search(Request $request)
@@ -79,6 +83,4 @@ class PostController extends Controller
             'message' => 'PostController@search'
         ]);
     }
-
-
 }
