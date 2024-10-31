@@ -63,7 +63,7 @@
                             <div>
                                 <label for="Email">Email</label>
                                 <div class="relative text-white-dark">
-                                    <input id="Email" type="email" placeholder="Enter Email"
+                                    <input v-model="email" id="Email" type="email" placeholder="Enter Email"
                                         class="form-input ps-10 placeholder:text-white-dark" />
                                     <span class="absolute start-4 top-1/2 -translate-y-1/2">
                                         <icon-mail :fill="true" />
@@ -73,7 +73,7 @@
                             <div>
                                 <label for="Password">Password</label>
                                 <div class="relative text-white-dark">
-                                    <input id="Password" type="password" placeholder="Enter Password"
+                                    <input v-model="password" id="Password" type="password" placeholder="Enter Password"
                                         class="form-input ps-10 placeholder:text-white-dark" />
                                     <span class="absolute start-4 top-1/2 -translate-y-1/2">
                                         <icon-lock-dots :fill="true" />
@@ -150,7 +150,7 @@
 </template>
 <script lang="ts" setup>
 
-import { computed, reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import appSetting from '@/app-setting';
 import { useAppStore } from '@/stores/index';
@@ -164,12 +164,10 @@ import IconFacebookCircle from '@/components/icon/icon-facebook-circle.vue';
 import IconTwitter from '@/components/icon/icon-twitter.vue';
 import IconGoogle from '@/components/icon/icon-google.vue';
 import { apiService } from '@/appservice';
-import VueCookies from 'vue-cookies';
 import * as utils from '@/utils';
 
 useMeta({ title: 'Login Boxed' });
 const router = useRouter();
-
 const store = useAppStore();
 // multi language
 const i18n = reactive(useI18n());
@@ -180,58 +178,31 @@ const changeLanguage = (item: any) => {
 const currentFlag = computed(() => {
     return `/assets/images/flags/${i18n.locale.toUpperCase()}.svg`;
 });
-const API_Authentication_ENDPOINT = () => {
-    return `/backend/api/auth/login`;
-}
 
+const email = ref();
+const password = ref();
 
 async function login() {
+    debugger;
     try {
         store.showEasyLoading();
         let res = await apiService().loginAPI({
             endpoint: "login", body: {
-                "email": "test@example.com",
-                "password": "password"
+                "email": email.value,
+                "password": password.value
             }
         });
 
         if (res.hasOwnProperty('token')) {
             utils.cookies.set('token', res.token);
+            router.push({ name: 'home' });
         }
-
-        debugger;
-        this.$cookie.get('token');
-        debugger;
     } catch (error) {
-        debugger;
         console.error('There has been a problem with your fetch operation:', error);
+        alert("error")
     }
     finally {
-        debugger;
         store.dismissEasyLoading();
-    }
-    // await apiService().loginAPI();
-
-    // let userEmail = document.getElementById('Email') && document.getElementById('Email').value ? document.getElementById('Email').value : '';
-    // let userPassword = document.getElementById('Password') && document.getElementById('Password').value ? document.getElementById('Password').value : '';
-
-    // if (utils.isEmptyNull(userEmail) || utils.isEmptyNull(userPassword)) return;
-
-    // let input = {
-    //     'email': userEmail,
-    //     'password': userPassword
-    // };
-
-    // await loginHandler(input);
-
-}
-
-async function loginHandler(input) {
-    let api = API_Authentication_ENDPOINT();
-    const response = await utils.fetchEasy(api, 'POST', input);
-
-    if (utils.isNOtEmptyNull(response) && response.hasOwnProperty('token')) {
-        utils.cookies.set('token', response.token);
     }
 }
 
