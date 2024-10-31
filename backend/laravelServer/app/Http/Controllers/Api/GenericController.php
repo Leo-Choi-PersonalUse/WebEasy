@@ -111,7 +111,7 @@ class GenericController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, string $table, string $id)
+    public function destroy(Request $request, string $table, string $id = null)
     {
         $tableCheckResponse = $this->checkAvailability(table: $table);
         if ($tableCheckResponse) {
@@ -121,9 +121,20 @@ class GenericController extends Controller
         try {
             // Get the model class name based on the table name
             $modelClass = 'App\\Models\\' . Str::studly(Str::singular($table));
-            $record = $modelClass::findOrFail($id);
-            $record->delete();
-            return response()->json(['message' => 'Record deleted successfully']);
+
+            if ($id == null) {
+                $param = $request->query();
+                if (!array_key_exists("id", $param))
+                    return response()->json(['message' => "0 records deleted successfully"]);
+
+                $deletedRows = $modelClass::whereIn('id', explode(",", $param["id"]))->delete();
+                return response()->json(['message' => "{$deletedRows} records deleted successfully"]);
+            } else {
+                $record = $modelClass::findOrFail($id);
+                $record->delete();
+                return response()->json(['message' => 'Record deleted successfully']);
+            }
+
 
         } catch (ModelNotFoundException $e) {
             abort(404);

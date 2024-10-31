@@ -163,6 +163,8 @@ import IconInstagram from '@/components/icon/icon-instagram.vue';
 import IconFacebookCircle from '@/components/icon/icon-facebook-circle.vue';
 import IconTwitter from '@/components/icon/icon-twitter.vue';
 import IconGoogle from '@/components/icon/icon-google.vue';
+import { apiService } from '@/appservice';
+import VueCookies from 'vue-cookies';
 import * as utils from '@/utils';
 
 useMeta({ title: 'Login Boxed' });
@@ -184,18 +186,43 @@ const API_Authentication_ENDPOINT = () => {
 
 
 async function login() {
+    try {
+        store.showEasyLoading();
+        let res = await apiService().loginAPI({
+            endpoint: "login", body: {
+                "email": "test@example.com",
+                "password": "password"
+            }
+        });
 
-    let userEmail = document.getElementById('Email') && document.getElementById('Email').value ? document.getElementById('Email').value : '';
-    let userPassword = document.getElementById('Password') && document.getElementById('Password').value ? document.getElementById('Password').value : '';
+        if (res.hasOwnProperty('token')) {
+            utils.cookies.set('token', res.token);
+        }
 
-    if (utils.isEmptyNull(userEmail) || utils.isEmptyNull(userPassword)) return;
+        debugger;
+        this.$cookie.get('token');
+        debugger;
+    } catch (error) {
+        debugger;
+        console.error('There has been a problem with your fetch operation:', error);
+    }
+    finally {
+        debugger;
+        store.dismissEasyLoading();
+    }
+    // await apiService().loginAPI();
 
-    let input = {
-        'email': userEmail,
-        'password': userPassword
-    };
+    // let userEmail = document.getElementById('Email') && document.getElementById('Email').value ? document.getElementById('Email').value : '';
+    // let userPassword = document.getElementById('Password') && document.getElementById('Password').value ? document.getElementById('Password').value : '';
 
-    await loginHandler(input);
+    // if (utils.isEmptyNull(userEmail) || utils.isEmptyNull(userPassword)) return;
+
+    // let input = {
+    //     'email': userEmail,
+    //     'password': userPassword
+    // };
+
+    // await loginHandler(input);
 
 }
 

@@ -31,9 +31,9 @@ Route::group([
 
 Route::group([
     //Api for authentication  
-    //'middleware' => ['auth:api'],
+    'middleware' => ['auth:api'],
     //Open For all 
-    'middleware' => ['api'],
+    //'middleware' => ['api'],
     'prefix' => 'v1'
 ], function ($router) {
 
@@ -49,6 +49,8 @@ Route::group([
     Route::patch('{table}/{id}', [GenericController::class, 'update']);
     Route::post('{table}', [GenericController::class, 'store']);
     Route::delete('{table}/{id}', [GenericController::class, 'destroy']);
+
+    Route::delete('{table}', [GenericController::class, 'destroy']);
 });
 
 
