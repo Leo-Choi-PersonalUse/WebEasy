@@ -164,6 +164,7 @@ import IconFacebookCircle from '@/components/icon/icon-facebook-circle.vue';
 import IconTwitter from '@/components/icon/icon-twitter.vue';
 import IconGoogle from '@/components/icon/icon-google.vue';
 import { apiService } from '@/appservice';
+import Swal from 'sweetalert2';
 import * as utils from '@/utils';
 
 useMeta({ title: 'Login Boxed' });
@@ -183,7 +184,6 @@ const email = ref();
 const password = ref();
 
 async function login() {
-    debugger;
     try {
         store.showEasyLoading();
         let res = await apiService().loginAPI({
@@ -195,11 +195,31 @@ async function login() {
 
         if (res.hasOwnProperty('token')) {
             utils.cookies.set('token', res.token);
+            const toast = Swal.mixin({
+                toast: true,
+                position: 'bottom-start',
+                showConfirmButton: false,
+                timer: 3000,
+                showCloseButton: true,
+                customClass: {
+                    popup: `color-success`
+                },
+            });
+            toast.fire({
+                title: 'Login Successful',
+            });
             router.push({ name: 'home' });
         }
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
-        alert("error")
+        Swal.fire({
+            icon: 'error',
+            title: 'Failure',
+            text: 'Wrong email or password',
+            padding: '2em',
+            customClass: 'sweet-alerts',
+        });
+
     }
     finally {
         store.dismissEasyLoading();
