@@ -110,6 +110,7 @@ import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogOverlay } f
 import { useAppStore } from '@/stores/index';
 import { apiService } from '@/appservice';
 import { getSelectedRows, deleteSelectedRows } from '@/utils';
+import $ from "jquery";
 
 
 useMeta({ title: 'Default Order Sorting Table' });
@@ -160,7 +161,6 @@ const submitData = async () => {
 const getdatatableRef = () => { return datatable.value }
 
 async function deleteButtonHandler() {
-
     let selectedRow = getSelectedRows(getdatatableRef());
     let ids_arr = selectedRow.map((e) => e.id);
     rows.value = rows.value.filter((e) => ids_arr.includes(e["id"]) == false)
